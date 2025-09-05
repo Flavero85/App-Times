@@ -167,23 +167,13 @@
             // --- COMPLETE MOCK DATA (DEFAULT) ---
             const defaultApiData = {
                 palmeiras: {
-                    overview: {
-                        latestResult: { opponent: "Corinthians", score: "2 - 1" },
-                        nextGames: [{ opponent: "Flamengo", date: "Sáb, 20:00", championship: "Brasileirão" }, { opponent: "Boca Juniors", date: "Qua, 21:30", championship: "Libertadores" }, { opponent: "Grêmio", date: "Dom, 16:00", championship: "Brasileirão" }],
-                        competitions: ["Campeonato Brasileiro", "Copa Libertadores", "Copa do Brasil", "Campeonato Paulista"],
-                        news: [{ title: "Dudu avança na recuperação e pode voltar em breve", url: "#" }, { title: "Abel Ferreira testa novas formações para a Libertadores", url: "#" }, { title: "Endrick brilha e Palmeiras vence no Brasileirão Sub-20", url: "#" }, { title: "Allianz Parque terá novo gramado sintético em 2025", url: "#" }],
-                        curiosities: [{ title: "Arrancada Heroica", text: "Em 1942, durante a 2ª Guerra, o clube foi forçado a mudar de nome de Palestra Italia para Palmeiras. A estreia com o novo nome foi justamente na final do Paulistão contra o São Paulo. O Palmeiras entrou em campo com a bandeira do Brasil e venceu por 3-1, garantindo o título no episódio que ficou conhecido como 'Arrancada Heroica'." }, { title: "Academia de Futebol", text: "O Palmeiras teve duas grandes eras conhecidas como 'Academia de Futebol'. A primeira, nos anos 60, e a segunda, nos anos 70, eram esquadrões que jogavam por música, liderados pelo craque Ademir da Guia, o 'Divino'." }, { title: "Representou a Seleção Brasileira", text: "Em 7 de setembro de 1965, a equipe inteira do Palmeiras (jogadores, comissão técnica e até massagista) vestiu a camisa amarela para representar a Seleção Brasileira na inauguração do estádio Mineirão. Venceram o Uruguai por 3-0."},{ title: "São Marcos de Palestra Itália", text: "O goleiro Marcos foi 'canonizado' pela torcida como 'São Marcos' após a defesa milagrosa de pênalti contra o River Plate na semifinal da Libertadores de 1999, um dos títulos mais importantes da história do clube."}]
-                    },
-                    standings: {
-                        "Brasileirão": Array.from({length: 20}, (_, i) => ({ position: i + 1, teamName: i === 2 ? "Palmeiras" : `Time ${i+1}`, logo: i === 2 ? "https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg" : ``, p: 70 - i*2, j: 38, v: 20, sg: 30-(i*2) })),
-                        "Libertadores": [ { position: 1, teamName: "Palmeiras", p: 16, j: 6, v: 5, sg: 12 }, { position: 2, teamName: "Boca Juniors", p: 11, j: 6, v: 3, sg: 5 } ],
-                        "Copa do Brasil": { type: 'knockout', stage: 'Oitavas de Final', opponent: 'Atlético-MG' }
-                    },
-                    achievements: [{ championship: "Copa Rio (Mundial de Clubes)", years: "1951" }, { championship: "Copa Libertadores", years: "1999, 2020, 2021" }, { championship: "Copa Mercosul", years: "1998" }, { championship: "Campeonato Brasileiro", years: "1960, 1967 (Taça Brasil), 1967 (Robertão), 1969, 1972, 1973, 1993, 1994, 2016, 2018, 2022, 2023" }, { championship: "Copa do Brasil", years: "1998, 2012, 2015, 2020" }, { championship: "Supercopa do Brasil", years: "2023" }, { championship: "Copa dos Campeões", years: "2000" }, { championship: "Torneio Rio-São Paulo", years: "5 Títulos" }, { championship: "Campeonato Paulista", years: "26 Títulos" }],
+                    overview: { latestResult: { opponent: "Corinthians", score: "2 - 1" }, nextGames: [{ opponent: "Flamengo", date: "Sáb, 20:00", championship: "Brasileirão" }, { opponent: "Boca Juniors", date: "Qua, 21:30", championship: "Libertadores" }, { opponent: "Grêmio", date: "Dom, 16:00", championship: "Brasileirão" }], competitions: ["Campeonato Brasileiro", "Copa Libertadores", "Copa do Brasil", "Campeonato Paulista"], news: [{ title: "Dudu avança na recuperação e pode voltar em breve", url: "#" }, { title: "Abel Ferreira testa novas formações para a Libertadores", url: "#" }, { title: "Endrick brilha e Palmeiras vence no Brasileirão Sub-20", url: "#" }, { title: "Allianz Parque terá novo gramado sintético em 2025", url: "#" }, { title: "Veiga atinge marca histórica de gols", url: "#" }], curiosities: [{ title: "Arrancada Heroica", text: "Em 1942, durante a 2ª Guerra, o clube foi forçado a mudar de nome de Palestra Italia para Palmeiras. A estreia com o novo nome foi justamente na final do Paulistão contra o São Paulo. O Palmeiras entrou em campo com a bandeira do Brasil e venceu por 3-1, garantindo o título no episódio que ficou conhecido como 'Arrancada Heroica'." }, { title: "Academia de Futebol", text: "O Palmeiras teve duas grandes eras conhecidas como 'Academia de Futebol'. A primeira, nos anos 60, e a segunda, nos anos 70, eram esquadrões que jogavam por música, liderados pelo craque Ademir da Guia, o 'Divino'." }, { title: "Representou a Seleção Brasileira", text: "Em 7 de setembro de 1965, a equipe inteira do Palmeiras (jogadores, comissão técnica e até massagista) vestiu a camisa amarela para representar a Seleção Brasileira na inauguração do estádio Mineirão. Venceram o Uruguai por 3-0."},{ title: "São Marcos de Palestra Itália", text: "O goleiro Marcos foi 'canonizado' pela torcida como 'São Marcos' após a defesa milagrosa de pênalti contra o River Plate na semifinal da Libertadores de 1999, um dos títulos mais importantes da história do clube."}]},
+                    standings: { "Brasileirão": Array.from({length: 20}, (_, i) => ({ position: i + 1, teamName: i === 2 ? "Palmeiras" : `Time ${i+1}`, logo: i === 2 ? "https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg" : ``, p: 70 - i*2, j: 38, v: 20, sg: 30-(i*2) })), "Libertadores": [ { position: 1, teamName: "Palmeiras", p: 16, j: 6, v: 5, sg: 12 }, { position: 2, teamName: "Boca Juniors", p: 11, j: 6, v: 3, sg: 5 } ], "Copa do Brasil": { type: 'knockout', stage: 'Oitavas de Final', opponent: 'Atlético-MG' }},
+                    achievements: [{ championship: "Copa Rio (Mundial de Clubes)", years: "1951" }, { championship: "Copa Libertadores", years: "1999, 2020, 2021" }, { championship: "Copa Mercosul", years: "1998" }, { championship: "Recopa Sul-Americana", years: "2022" }, { championship: "Campeonato Brasileiro", years: "1960, 1967 (Taça Brasil), 1967 (Robertão), 1969, 1972, 1973, 1993, 1994, 2016, 2018, 2022, 2023" }, { championship: "Copa do Brasil", years: "1998, 2012, 2015, 2020" }, { championship: "Supercopa do Brasil", years: "2023" }, { championship: "Copa dos Campeões", years: "2000" }, { championship: "Torneio Rio-São Paulo", years: "5 Títulos" }, { championship: "Campeonato Paulista", years: "26 Títulos" }],
                     music: [{ id: 'hino_pal', title: 'Hino Oficial', lyrics: 'Quando surge o alviverde imponente...'}, { id: 'canto1_pal', title: 'Palmeiras, Minha Vida é Você', lyrics: 'E não importa o que digam...'}, { id: 'canto2_pal', title: 'Vamos Ganhar, Porco!', lyrics: 'Vamos ganhar Porco, olê, olê, olê!'}, { id: 'canto3_pal', title: 'Canta e Vibra', lyrics: 'Canta e vibra, a torcida alviverde...'}]
                 },
                 rio_branco: {
-                    overview: { latestResult: { opponent: "Noroeste", score: "0 - 0" }, nextGames: [{ opponent: "XV de Jaú", date: "Dom, 15:00", championship: "Paulista A2" }, { opponent: "Portuguesa Santista", date: "Qua, 20:00", championship: "Paulista A2" }], competitions: ["Campeonato Paulista A2", "Copa Paulista"], news: [{ title: "Rio Branco anuncia novo patrocinador master", url: "#"}, { title: "Planejamento para a Copa Paulista é iniciado", url: "#"}], curiosities: [ { title: "O Tigre da Paulista", text: "Fundado em 1913, o Rio Branco Esporte Clube é um dos clubes mais antigos e tradicionais do interior de São Paulo, da cidade de Americana." }, { title: "Clássico RIO-BA", text: "O clube possui uma grande rivalidade com o União Barbarense, da cidade vizinha de Santa Bárbara d'Oeste. O dérbi é conhecido como 'Clássico RIO-BA' e para a cidade."} ]},
+                    overview: { latestResult: { opponent: "Noroeste", score: "0 - 0" }, nextGames: [{ opponent: "XV de Jaú", date: "Dom, 15:00", championship: "Paulista A2" }, { opponent: "Portuguesa Santista", date: "Qua, 20:00", championship: "Paulista A2" }], competitions: ["Campeonato Paulista A2", "Copa Paulista"], news: [{ title: "Rio Branco anuncia novo patrocinador master", url: "#"}, { title: "Planejamento para a Copa Paulista é iniciado", url: "#"}, { title: "Ídolo do clube visita o treino da equipe", url: "#"}], curiosities: [ { title: "O Tigre da Paulista", text: "Fundado em 1913, o Rio Branco Esporte Clube é um dos clubes mais antigos e tradicionais do interior de São Paulo, da cidade de Americana." }, { title: "Clássico RIO-BA", text: "O clube possui uma grande rivalidade com o União Barbarense, da cidade vizinha de Santa Bárbara d'Oeste. O dérbi é conhecido como 'Clássico RIO-BA' e para a cidade."} ]},
                     standings: { "Paulista A2": Array.from({length: 16}, (_, i) => ({ position: i + 1, teamName: i === 7 ? "Rio Branco-SP" : `Time ${i+1}`, logo: i === 7 ? "https://upload.wikimedia.org/wikipedia/pt/4/48/Riobrancosp.png" : ``, p: 25 - i, j: 15, v: 7, sg: 5-(i*2) }))},
                     achievements: [ { championship: "Campeonato Paulista - Série A2", years: "1922, 1923, 1948, 2012" }, { championship: "Campeonato Paulista - Série A3", years: "1968, 2009" }, { championship: "Campeonato Paulista - Segunda Divisão", years: "2020" } ],
                     music: [{ id: 'hino_rb', title: 'Hino Oficial', lyrics: 'Rio Branco, Rio Branco / De glorioso pavilhão...'}, { id: 'canto1_rb', title: 'Eu Sou Tigre', lyrics: 'Eu sou Tigre, com muito orgulho...'}]
@@ -202,9 +192,8 @@
                 }
             };
             
-            let teamsData; // Will be loaded from storage or defaults
-
-            // --- STATE & ELEMENTS ---
+            let teamsData;
+            let tempTeamsData;
             let activeContentTab = 'overview';
             const contentEl = document.getElementById('content');
             const headerTitleEl = document.getElementById('header-title');
@@ -215,47 +204,29 @@
             const editTeamModal = document.getElementById('edit-team-modal');
             const defaultBg = '#111827';
             let audioContextStarted = false, synth, currentPlayingId = null, progressTimeout = null;
-            let tempTeamsData; // For editing in settings modal
 
-            // --- DATA & THEME PERSISTENCE ---
             function loadAndInitializeData() {
                 const savedTheme = localStorage.getItem('placarTheme');
                 const savedTeams = localStorage.getItem('placarTeamsData');
-
                 document.documentElement.classList.toggle('light', savedTheme === 'light');
-
                 if (savedTeams) {
                     teamsData = JSON.parse(savedTeams);
                 } else {
-                    teamsData = {};
-                    Object.keys(defaultApiData).forEach(key => {
-                        teamsData[key] = {
-                            id: key,
-                            displayName: key.charAt(0).toUpperCase() + key.slice(1),
-                            logo: `https://placehold.co/64x64/374151/FFFFFF?text=${key.charAt(0).toUpperCase()}`,
-                            theme: { primary: '#FFFFFF', background: '#1C1C1C' }, // Generic theme
-                            liveData: defaultApiData[key]
-                        };
-                    });
-                    // Specific defaults
-                    teamsData.palmeiras.displayName = 'Palmeiras';
-                    teamsData.palmeiras.logo = 'https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg';
-                    teamsData.palmeiras.theme = { primary: '#00B945', background: '#01321A' };
-                    // ... and so on for other teams
+                    teamsData = {
+                        palmeiras: { id: 'palmeiras', displayName: 'Palmeiras', logo: 'https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg', theme: { primary: '#00B945', background: '#01321A' }, liveData: defaultApiData.palmeiras },
+                        rio_branco: { id: 'rio_branco', displayName: 'Rio Branco', logo: 'https://upload.wikimedia.org/wikipedia/pt/4/48/Riobrancosp.png', theme: { primary: '#FFFFFF', background: '#1C1C1C' }, liveData: defaultApiData.rio_branco },
+                        packers: { id: 'packers', displayName: 'Packers', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Green_Bay_Packers_logo.svg', theme: { primary: '#FFB612', background: '#182E2B' }, liveData: defaultApiData.packers },
+                        brasil: { id: 'brasil', displayName: 'Brasil', logo: 'https://upload.wikimedia.org/wikipedia/pt/b/b9/Logo_CBF_2019.svg', theme: { primary: '#FFDC00', background: '#001A4C' }, liveData: defaultApiData.brasil }
+                    };
                 }
-                 // Deep copy for temporary edits
-                tempTeamsData = JSON.parse(JSON.stringify(teamsData));
             }
 
             function saveAllSettings() {
-                // Save theme
                 localStorage.setItem('placarTheme', document.documentElement.classList.contains('light') ? 'light' : 'dark');
-                // Commit temporary team data to main data and save
                 teamsData = JSON.parse(JSON.stringify(tempTeamsData));
                 localStorage.setItem('placarTeamsData', JSON.stringify(teamsData));
             }
             
-            // --- RENDER & LOGIC FUNCTIONS ---
             const applyTheme = (theme) => {
                 document.documentElement.style.setProperty('--theme-primary', theme.primary);
                 document.documentElement.style.setProperty('--theme-background', theme.background);
@@ -318,13 +289,55 @@
             };
 
             const renderTeamDetail = (teamId, activeTab = 'overview', activeSubTab = null) => {
-                 // The rest of this function is identical to V16, handling detail page rendering
-                 // ... omitted for brevity but should be included from previous correct versions
-            };
+                settingsButton.classList.add('hidden');
+                const team = teamsData[teamId];
+                activeContentTab = activeTab;
+                updateHeader(team.displayName, true);
+                applyTheme(team.theme);
 
+                const renderContentTabs = () => `<div class="flex space-x-1 sm:space-x-4 border-b border-white/10 mb-4 overflow-x-auto pb-2">${Object.entries({ overview: 'Visão Geral', standings: 'Tabela', achievements: 'Conquistas', curiosities: 'Curiosidades', music: 'Músicas' }).map(([k,v])=>`<button data-tab="${k}" class="content-tab-button flex-shrink-0 py-2 px-2 font-semibold transition-all duration-300 ${activeContentTab===k?'border-b-2 border-theme-primary text-theme-primary':'text-gray-400 hover:text-white'}">${v}</button>`).join('')}</div>`;
+
+                const renderSubContent = () => {
+                    const { overview, standings, achievements, music } = team.liveData;
+                    switch(activeContentTab) {
+                        case 'standings':
+                            const championships = Object.keys(standings);
+                            const currentChamp = activeSubTab || championships[0];
+                            const data = standings[currentChamp];
+                            let subTabsHtml = championships.length > 1 ? '<div class="flex flex-wrap gap-2 mb-4">' + championships.map(champ => `<button data-subtab="${champ}" class="subtab-button text-sm font-semibold px-3 py-1 rounded-full transition-colors ${currentChamp === champ ? 'bg-theme-primary text-white' : 'bg-black/20 text-gray-300 hover:bg-black/40'}">${champ}</button>`).join('') + '</div>' : '';
+                            
+                            let standingsHtml = `<div class="bg-black/20 rounded-lg shadow-lg overflow-x-auto">`;
+                            if (data.type === 'knockout') {
+                                standingsHtml += `<div class="p-4 text-center"><p class="font-semibold text-white">Fase Atual: ${data.stage}</p><p class="text-gray-300">Próximo Adversário: ${data.opponent}</p></div>`;
+                            } else if (team.id === 'packers') {
+                                 let nflTable = '';
+                                 for(const [div, teams] of Object.entries(data)) {
+                                     nflTable += `<h4 class="font-semibold text-theme-primary mt-2 mb-1 p-2">${div}</h4><table class="w-full text-sm text-left text-gray-300"><tbody>${teams.map(r => `<tr class="border-b border-white/10"><td class="px-2 py-2 font-medium text-white">${r.position}. ${r.teamName}</td><td class="px-2 py-2 text-center font-bold">${r.record}</td></tr>`).join('')}</tbody></table>`;
+                                 }
+                                 standingsHtml += nflTable;
+                            } else {
+                                standingsHtml += `<table class="w-full text-sm text-left text-gray-300"><thead class="text-xs text-gray-400 uppercase"><tr><th class="pl-4 pr-2 py-3 text-center">#</th><th class="px-2 py-3">Time</th><th class="px-2 py-3 text-center">P</th><th class="px-2 py-3 text-center">J</th><th class="px-2 py-3 text-center">V</th><th class="px-2 py-3 text-center">SG</th></tr></thead><tbody>${data.map(r => `<tr class="border-b border-white/10 hover:bg-white/5 ${r.teamName.includes(team.displayName)?'bg-theme-primary/10':''}"><td class="pl-4 pr-2 py-4 text-center font-medium">${r.position}</td><td class="px-2 py-4 font-medium whitespace-nowrap flex items-center gap-2"><img src="${r.logo||'https://placehold.co/24x24/374151/9CA3AF?text=?'}" class="w-6 h-6 object-contain"/>${r.teamName}</td><td class="px-2 py-4 text-center font-bold">${r.p}</td><td class="px-2 py-4 text-center">${r.j}</td><td class="px-2 py-4 text-center">${r.v}</td><td class="px-2 py-4 text-center">${r.sg}</td></tr>`).join('')}</tbody></table>`;
+                            }
+                            standingsHtml += '</div>';
+                            return subTabsHtml + standingsHtml;
+                        case 'music': return `<div class="space-y-4 stagger-children">${music?.map(song => `<div data-song-id="${song.id}" class="song-player bg-black/20 rounded-lg shadow-md p-4 flex items-center gap-4"><button class="play-pause-btn p-2 bg-black/30 rounded-full text-white hover:bg-theme-primary transition-colors"><svg class="play-icon w-6 h-6 fill-theme-primary" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg><svg class="pause-icon hidden w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg></button><div class="flex-grow"><p class="font-bold text-white">${song.title}</p><p class="text-xs text-gray-400 italic">"${song.lyrics}"</p><div class="w-full bg-black/30 rounded-full h-1.5 mt-2"><div class="progress-bar-fill bg-theme-primary h-1.5 rounded-full"></div></div></div></div>`).join('')}</div>`;
+                        case 'achievements': return `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 stagger-children">${achievements?.map(ach => `<div class="bg-black/20 rounded-lg shadow-md p-4 transition-transform hover:-translate-y-1"><h4 class="font-bold text-md text-theme-primary">${ach.championship}</h4><p class="text-xs text-gray-400 break-words mt-1">${ach.years}</p></div>`).join('')}</div>`;
+                        case 'curiosities': return `<div class="space-y-4 stagger-children">${overview.curiosities.map(c => `<div class="bg-black/20 p-4 rounded-lg shadow-md transition-transform hover:-translate-y-1"><h4 class="font-bold text-theme-primary">${c.title}</h4><p class="text-sm text-gray-300 mt-1">${c.text}</p></div>`).join('')}</div>`;
+                        default: return `<div class="space-y-6 stagger-children"><section><h3 class="text-lg font-semibold mb-2 text-theme-primary">Próximos Jogos</h3><div class="space-y-3">${overview.nextGames.map(game => `<div class="bg-black/20 p-3 rounded-lg shadow-md transition-transform hover:scale-105"><div class="flex items-center justify-between text-center"><div class="w-1/3 flex flex-col items-center gap-1"><img src="${team.logo}" class="w-8 h-8 mx-auto object-contain"><p class="font-bold text-white text-xs">${team.displayName}</p></div><div class="w-1/3"><p class="font-bold text-sm text-white">VS</p><p class="text-xs text-gray-400">${game.date}</p></div><div class="w-1/3 flex flex-col items-center gap-1"><img src="${game.opponentLogo || 'https://placehold.co/32x32'}" class="w-8 h-8 mx-auto object-contain"><p class="font-bold text-white text-xs">${game.opponent}</p></div></div><p class="text-center text-xs mt-2 text-gray-400">${game.championship}</p></div>`).join('')}</div></section><section><h3 class="text-lg font-semibold mb-2 text-theme-primary">Competições</h3><div class="flex flex-wrap gap-2">${overview.competitions.map(comp => `<span class="bg-black/20 text-gray-300 text-xs font-medium px-3 py-1 rounded-full">${comp}</span>`).join('')}</div></section><section><h3 class="text-lg font-semibold mb-2 text-theme-primary">Notícias</h3><div class="space-y-3">${overview.news.map(item => `<a href="${item.url}" class="flex items-center bg-black/20 p-3 rounded-lg shadow-md gap-4 hover:bg-white/10 transition-colors"><img src="${item.imageUrl || 'https://placehold.co/100x100/374151/9CA3AF?text=?'}" class="w-16 h-16 rounded-md object-cover flex-shrink-0"><div class="flex-grow"><p class="font-medium text-sm leading-tight text-white">${item.title}</p></div></a>`).join('')}</div></section></div>`;
+                    }
+                };
+                
+                contentEl.innerHTML = `<div>${renderContentTabs()}</div><div id="sub-content">${renderSubContent()}</div>`;
+                contentEl.querySelectorAll('.stagger-children > *').forEach((child, index) => { child.style.animationDelay = `${index * 80}ms`; });
+                
+                document.querySelectorAll('.content-tab-button').forEach(btn => { btn.addEventListener('click', () => renderTeamDetail(teamId, btn.dataset.tab)); });
+                if (activeTab === 'standings') { document.querySelectorAll('.subtab-button').forEach(btn => { btn.addEventListener('click', () => renderTeamDetail(teamId, 'standings', btn.dataset.subtab)); }); }
+                if (activeTab === 'music') { document.querySelectorAll('.play-pause-btn').forEach(btn => { btn.addEventListener('click', () => { initAudio(); playSound(btn.closest('.song-player').dataset.songId); }); }); }
+            };
+            
             // --- SETTINGS MODAL LOGIC ---
             function openSettingsModal() {
-                tempTeamsData = JSON.parse(JSON.stringify(teamsData)); // Create fresh copy for editing
+                tempTeamsData = JSON.parse(JSON.stringify(teamsData));
                 document.getElementById('theme-toggle').checked = !document.documentElement.classList.contains('light');
                 renderEditTeamsList();
                 settingsModal.classList.remove('hidden');
@@ -346,11 +359,7 @@
                     editList.appendChild(button);
                 });
             }
-
-            function closeSettingsModal() {
-                settingsModal.classList.add('hidden');
-            }
-            
+            function closeSettingsModal() { settingsModal.classList.add('hidden'); }
             function openEditTeamModal(teamId) {
                 const team = tempTeamsData[teamId];
                 document.getElementById('edit-team-id').value = teamId;
@@ -358,31 +367,21 @@
                 document.getElementById('edit-team-logo').value = team.logo;
                 editTeamModal.classList.remove('hidden');
             }
-
-            function closeEditTeamModal() {
-                editTeamModal.classList.add('hidden');
-            }
-
+            function closeEditTeamModal() { editTeamModal.classList.add('hidden'); }
             function saveTeamChanges() {
                 const teamId = document.getElementById('edit-team-id').value;
-                const newName = document.getElementById('edit-team-name').value;
-                const newLogo = document.getElementById('edit-team-logo').value;
-
-                if (tempTeamsData[teamId]) {
-                    tempTeamsData[teamId].displayName = newName;
-                    tempTeamsData[teamId].logo = newLogo;
-                    closeEditTeamModal();
-                    renderEditTeamsList(); // Refresh list in settings modal
-                }
+                tempTeamsData[teamId].displayName = document.getElementById('edit-team-name').value;
+                tempTeamsData[teamId].logo = document.getElementById('edit-team-logo').value;
+                closeEditTeamModal();
+                renderEditTeamsList();
             }
             
             // --- EVENT LISTENERS ---
             settingsButton.addEventListener('click', openSettingsModal);
             document.getElementById('save-settings-button').addEventListener('click', () => { saveAllSettings(); closeSettingsModal(); renderDashboard(); });
-            document.getElementById('cancel-settings-button').addEventListener('click', closeSettingsModal);
+            document.getElementById('cancel-settings-button').addEventListener('click', () => { loadAndInitializeData(); closeSettingsModal(); });
             document.getElementById('theme-toggle').addEventListener('change', (e) => {
                 document.documentElement.classList.toggle('light', !e.target.checked);
-                // The actual saving now happens with the main save button
             });
             document.getElementById('save-edit-button').addEventListener('click', saveTeamChanges);
             document.getElementById('cancel-edit-button').addEventListener('click', closeEditTeamModal);
@@ -393,7 +392,8 @@
             renderDashboard();
         });
 
-        function setupPWA() { /* ... same as V14 ... */ }
+        function setupPWA() {
+            const manifest={name:"Meu Placar PWA",short_name:"Meu Placar",start_url:".",display:"standalone",background_color:"#111827",theme_color:"#111827",icons:[{src:"https://placehold.co/192x192/1F2937/FFFFFF?text=MP",sizes:"192x192",type:"image/png"},{src:"https://placehold.co/512x512/1F2937/FFFFFF?text=MP",sizes:"512x512",type:"image/png"}]},manifestURL=URL.createObjectURL(new Blob([JSON.stringify(manifest)],{type:"application/json"}));document.head.appendChild(Object.assign(document.createElement("link"),{rel:"manifest",href:manifestURL}));if("serviceWorker"in navigator){const e="const CACHE_NAME = 'meu-placar-cache-v19'; const urlsToCache = ['.']; self.addEventListener('install', e => e.waitUntil(caches.open(CACHE_NAME).then(c => c.addAll(urlsToCache)))); self.addEventListener('fetch', e => e.respondWith(caches.match(e.request).then(r => r || fetch(e.request)))); self.addEventListener('activate', e => e.waitUntil(caches.keys().then(names => Promise.all(names.map(name => name !== CACHE_NAME ? caches.delete(name) : null)))));",t=URL.createObjectURL(new Blob([e],{type:"application/javascript"}));navigator.serviceWorker.register(t).catch(e=>console.error("SW Error:",e))}let e;const t=document.getElementById("install-button");window.addEventListener("beforeinstallprompt",o=>{o.preventDefault(),e=o,t.classList.remove("hidden")}),t.addEventListener("click",async()=>{e&&(e.prompt(),await e.userChoice,e=null,t.classList.add("hidden"))})}
     </script>
 </body>
 </html>
