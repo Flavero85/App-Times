@@ -1,0 +1,126 @@
+<!DOCTYPE html>
+<html lang="pt-BR" class="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rio Branco - Meu Placar</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.7.77/Tone.js"></script>
+    <meta name="theme-color" id="theme-color-meta" content="#1C1C1C">
+    <style>
+        :root { --theme-primary: #FFFFFF; --theme-background: #1C1C1C; }
+        html.light { --theme-background: #F3F4F6; }
+        body { font-family: 'Inter', sans-serif; -webkit-tap-highlight-color: transparent; background-color: var(--theme-background); color: #F9FAFB; transition: background-color 0.5s ease-out; }
+        html.light body { color: #1F2937; }
+        .bg-theme-primary { background-color: var(--theme-primary); }
+        .text-theme-primary { color: var(--theme-primary); }
+        .border-theme-primary { border-color: var(--theme-primary); }
+        .fill-theme-primary { fill: var(--theme-primary); }
+        .stagger-children > * { opacity: 0; animation: fadeInUp 0.6s cubic-bezier(0.25, 0.46, 0.45, 0.94) forwards; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
+        @keyframes progress-bar { from { width: 0%; } to { width: 100%; } }
+        .progress-bar-fill.playing { animation: progress-bar 5s linear forwards; }
+    </style>
+</head>
+<body id="app-body">
+    <div id="app" class="max-w-4xl mx-auto min-h-screen flex flex-col">
+        <header id="app-header" class="bg-black/30 backdrop-blur-sm text-white p-4 sticky top-0 z-40 flex items-center gap-3 transition-colors duration-500 border-b border-white/10">
+            <a href="index.html" class="p-2 -ml-2 rounded-full hover:bg-white/10 transition-all">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M19 12H5"/><path d="m12 19-7-7 7-7"/></svg>
+            </a>
+            <h1 id="header-title" class="text-xl font-bold"></h1>
+        </header>
+        <main id="content" class="p-4 flex-grow"></main>
+        <footer class="text-center p-4 text-xs text-gray-400 border-t border-white/10">Meu Placar PWA &copy; 2024</footer>
+    </div>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+    const fullData = {
+        palmeiras: { id: 'palmeiras', page: 'palmeiras.html', displayName: 'Palmeiras', logo: 'https://upload.wikimedia.org/wikipedia/commons/1/10/Palmeiras_logo.svg', theme: { primary: '#00B945', background: '#01321A' }, liveData: {}},
+        rio_branco: { 
+            id: 'rio_branco', page: 'rio_branco.html', displayName: 'Rio Branco', logo: 'https://upload.wikimedia.org/wikipedia/pt/4/48/Riobrancosp.png', theme: { primary: '#FFFFFF', background: '#1C1C1C' },
+            liveData: {
+                overview: { latestResult: { opponent: "Noroeste", score: "0 - 0" }, nextGames: [{ opponent: "XV de Jaú", date: "Dom, 15:00", championship: "Paulista A2" }], competitions: ["Campeonato Paulista A2", "Copa Paulista"], news: [{ title: "Rio Branco anuncia novo patrocinador master", url: "#"}, { title: "Planejamento para a Copa Paulista é iniciado", url: "#"}], curiosities: [ { title: "O Tigre da Paulista", text: "Fundado em 1913, o Rio Branco Esporte Clube é um dos clubes mais tradicionais do interior de São Paulo." }, { title: "Clássico RIO-BA", text: "O clube possui uma grande rivalidade com o União Barbarense, da cidade vizinha. O dérbi é conhecido como 'Clássico RIO-BA'."} ]},
+                standings: { "Paulista A2": Array.from({length: 16}, (_, i) => ({ position: i + 1, teamName: i === 7 ? "Rio Branco-SP" : `Time ${i+1}`, logo: i === 7 ? "https://upload.wikimedia.org/wikipedia/pt/4/48/Riobrancosp.png" : ``, p: 25 - i, j: 15, v: 7, sg: 5-(i*2) }))},
+                achievements: [ { championship: "Campeonato Paulista - Série A2", years: "1922, 1923, 1948, 2012" }, { championship: "Copa Paulista", years: "2021" }],
+                music: [{ id: 'hino_rb', title: 'Hino Oficial', lyrics: 'Rio Branco, Rio Branco / De glorioso pavilhão...'}, { id: 'canto1_rb', title: 'Eu Sou Tigre', lyrics: 'Eu sou Tigre, com muito orgulho...'}]
+            }
+        },
+        packers: { id: 'packers', page: 'packers.html', displayName: 'Packers', logo: 'https://upload.wikimedia.org/wikipedia/commons/5/50/Green_Bay_Packers_logo.svg', theme: { primary: '#FFB612', background: '#182E2B' }, liveData: {}},
+        brasil: { id: 'brasil', page: 'brasil.html', displayName: 'Brasil', logo: 'https://upload.wikimedia.org/wikipedia/pt/b/b9/Logo_CBF_2019.svg', theme: { primary: '#FFDC00', background: '#001A4C' }, liveData: {}}
+    };
+
+    let teamsData;
+    const contentEl = document.getElementById('content');
+    let audioContextStarted = false, synth, currentPlayingId = null, progressTimeout = null;
+
+    function loadData() {
+        const savedTeams = localStorage.getItem('placarTeamsData');
+        teamsData = savedTeams ? JSON.parse(savedTeams) : fullData;
+        const savedTheme = localStorage.getItem('placarTheme');
+        document.documentElement.classList.toggle('light', savedTheme === 'light');
+    }
+    
+    const applyTheme = (theme) => {
+        document.documentElement.style.setProperty('--theme-primary', theme.primary);
+        document.documentElement.style.setProperty('--theme-background', theme.background);
+        document.getElementById('theme-color-meta').setAttribute('content', theme.background);
+    };
+
+    const initAudio = () => { if (audioContextStarted) return; Tone.start(); synth = new Tone.Synth().toDestination(); audioContextStarted = true; };
+    const resetPlayerUI = (player) => { if(player) { player.querySelector('.play-icon').classList.remove('hidden'); player.querySelector('.pause-icon').classList.add('hidden'); player.querySelector('.progress-bar-fill').classList.remove('playing'); } };
+    const playSound = (songId) => {
+        if (!audioContextStarted) initAudio();
+        if (currentPlayingId && progressTimeout) { clearTimeout(progressTimeout); const oldPlayer = document.querySelector(`[data-song-id="${currentPlayingId}"]`); resetPlayerUI(oldPlayer); }
+        if (currentPlayingId === songId) { currentPlayingId = null; return; }
+        currentPlayingId = songId;
+        const player = document.querySelector(`[data-song-id="${songId}"]`);
+        player.querySelector('.play-icon').classList.add('hidden');
+        player.querySelector('.pause-icon').classList.remove('hidden');
+        const progressBar = player.querySelector('.progress-bar-fill');
+        progressBar.classList.remove('playing'); void progressBar.offsetWidth; progressBar.classList.add('playing');
+        synth.triggerAttackRelease("C4", "8n");
+        progressTimeout = setTimeout(() => { resetPlayerUI(player); currentPlayingId = null; }, 5000);
+    };
+
+    const renderTeamDetail = (teamId, activeTab = 'overview', activeSubTab = null) => {
+        const team = teamsData[teamId];
+        document.getElementById('header-title').textContent = team.displayName;
+        applyTheme(team.theme);
+
+        const renderContentTabs = () => `<div class="flex space-x-1 sm:space-x-4 border-b border-white/10 mb-4 overflow-x-auto pb-2">${Object.entries({ overview: 'Visão Geral', standings: 'Tabela', achievements: 'Conquistas', curiosities: 'Curiosidades', music: 'Músicas' }).map(([k,v])=>`<button data-tab="${k}" class="content-tab-button flex-shrink-0 py-2 px-2 font-semibold transition-all duration-300 ${activeTab===k?'border-b-2 border-theme-primary text-theme-primary':'text-gray-400 hover:text-white'}">${v}</button>`).join('')}</div>`;
+        
+        const renderSubContent = () => {
+            const { overview, standings, achievements, music } = team.liveData;
+            switch(activeTab) {
+                case 'standings':
+                    const championships = Object.keys(standings);
+                    const currentChamp = activeSubTab || championships[0];
+                    const data = standings[currentChamp];
+                    let subTabsHtml = championships.length > 1 ? '<div class="flex flex-wrap gap-2 mb-4">' + championships.map(champ => `<button data-subtab="${champ}" class="subtab-button text-sm font-semibold px-3 py-1 rounded-full transition-colors ${currentChamp === champ ? 'bg-theme-primary text-black' : 'bg-black/20 text-gray-300 hover:bg-black/40'}">${champ}</button>`).join('') + '</div>' : '';
+                    let standingsHtml = `<div class="bg-black/20 rounded-lg shadow-lg overflow-x-auto">${subTabsHtml}<table class="w-full text-sm text-left text-gray-300"><thead class="text-xs text-gray-400 uppercase"><tr><th class="pl-4 pr-2 py-3 text-center">#</th><th class="px-2 py-3">Time</th><th class="px-2 py-3 text-center">P</th><th class="px-2 py-3 text-center">J</th><th class="px-2 py-3 text-center">V</th><th class="px-2 py-3 text-center">SG</th></tr></thead><tbody>${data.map(r => `<tr class="border-b border-white/10 hover:bg-white/5 ${r.teamName.includes(team.displayName)?'bg-theme-primary/10':''}"><td class="pl-4 pr-2 py-4 text-center font-medium">${r.position}</td><td class="px-2 py-4 font-medium whitespace-nowrap flex items-center gap-2"><img src="${r.logo||'https://placehold.co/24x24/374151/9CA3AF?text=?'}" class="w-6 h-6 object-contain"/>${r.teamName}</td><td class="px-2 py-4 text-center font-bold">${r.p}</td><td class="px-2 py-4 text-center">${r.j}</td><td class="px-2 py-4 text-center">${r.v}</td><td class="px-2 py-4 text-center">${r.sg}</td></tr>`).join('')}</tbody></table></div>`;
+                    return standingsHtml;
+                case 'music': return `<div class="space-y-4 stagger-children">${music?.map(song => `<div data-song-id="${song.id}" class="song-player bg-black/20 rounded-lg shadow-md p-4 flex items-center gap-4"><button class="play-pause-btn p-2 bg-black/30 rounded-full text-white hover:bg-theme-primary transition-colors"><svg class="play-icon w-6 h-6 fill-theme-primary" viewBox="0 0 24 24"><path d="M8 5v14l11-7z"></path></svg><svg class="pause-icon hidden w-6 h-6" viewBox="0 0 24 24" fill="currentColor"><path d="M6 19h4V5H6v14zm8-14v14h4V5h-4z"></path></svg></button><div class="flex-grow"><p class="font-bold text-white">${song.title}</p><p class="text-xs text-gray-400 italic">"${song.lyrics}"</p><div class="w-full bg-black/30 rounded-full h-1.5 mt-2"><div class="progress-bar-fill bg-theme-primary h-1.5 rounded-full"></div></div></div></div>`).join('')}</div>`;
+                case 'achievements': return `<div class="grid grid-cols-1 md:grid-cols-2 gap-4 stagger-children">${achievements?.map(ach => `<div class="bg-black/20 rounded-lg shadow-md p-4"><h4 class="font-bold text-md text-theme-primary">${ach.championship}</h4><p class="text-xs text-gray-400 mt-1">${ach.years}</p></div>`).join('')}</div>`;
+                case 'curiosities': return `<div class="space-y-4 stagger-children">${overview.curiosities.map(c => `<div class="bg-black/20 p-4 rounded-lg shadow-md"><h4 class="font-bold text-theme-primary">${c.title}</h4><p class="text-sm text-gray-300 mt-1">${c.text}</p></div>`).join('')}</div>`;
+                default: return `<div class="space-y-6 stagger-children"><section><h3 class="text-lg font-semibold mb-2 text-theme-primary">Próximos Jogos</h3><div class="space-y-3">${overview.nextGames.map(game => `<div class="bg-black/20 p-3 rounded-lg shadow-md"><div class="flex items-center justify-between text-center"><div class="w-1/3 flex flex-col items-center gap-1"><img src="${team.logo}" class="w-8 h-8 mx-auto object-contain"><p class="font-bold text-white text-xs">${team.displayName}</p></div><div class="w-1/3"><p class="font-bold text-sm text-white">VS</p><p class="text-xs text-gray-400">${game.date}</p></div><div class="w-1/3 flex flex-col items-center gap-1"><img src="https://placehold.co/32x32" class="w-8 h-8 mx-auto object-contain"><p class="font-bold text-white text-xs">${game.opponent}</p></div></div><p class="text-center text-xs mt-2 text-gray-400">${game.championship}</p></div>`).join('')}</div></section><section><h3 class="text-lg font-semibold mb-2 text-theme-primary">Competições</h3><div class="flex flex-wrap gap-2">${overview.competitions.map(comp => `<span class="bg-black/20 text-gray-300 text-xs font-medium px-3 py-1 rounded-full">${comp}</span>`).join('')}</div></section><section><h3 class="text-lg font-semibold mb-2 text-theme-primary">Notícias</h3><div class="space-y-3">${overview.news.map(item => `<a href="${item.url}" class="flex items-center bg-black/20 p-3 rounded-lg shadow-md gap-4 hover:bg-white/10"><img src="https://placehold.co/100x100/374151/9CA3AF?text=?" class="w-16 h-16 rounded-md object-cover"><p class="font-medium text-sm text-white">${item.title}</p></a>`).join('')}</div></section></div>`;
+            }
+        };
+        
+        contentEl.innerHTML = `<div>${renderContentTabs()}</div><div id="sub-content">${renderSubContent()}</div>`;
+        contentEl.querySelectorAll('.stagger-children > *').forEach((child, index) => { child.style.animationDelay = `${index * 80}ms`; });
+        
+        document.querySelectorAll('.content-tab-button').forEach(btn => { btn.addEventListener('click', () => renderTeamDetail(teamId, btn.dataset.tab)); });
+        if (activeTab === 'standings') { document.querySelectorAll('.subtab-button').forEach(btn => { btn.addEventListener('click', () => renderTeamDetail(teamId, 'standings', btn.dataset.subtab)); }); }
+        if (activeTab === 'music') { document.querySelectorAll('.play-pause-btn').forEach(btn => { btn.addEventListener('click', () => { initAudio(); playSound(btn.closest('.song-player').dataset.songId); }); }); }
+    };
+    
+    loadData();
+    renderTeamDetail('rio_branco');
+});
+</script>
+</body>
+</html>
